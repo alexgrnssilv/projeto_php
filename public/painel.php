@@ -18,24 +18,30 @@ $tarefas = lerDados($fileName);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Listagem de Tarefas</title>
 </head>
 <body>
-    <h1>Lista de Tarefas</h1>
+    <div class="container">
+    <h1>Minhas Tarefas</h1>
 
-   <a href="formTarefa.php">Criar Tarefa</a><br><br>
-    <a href="../actions/logout.php">Desconectar</a>
-    
-    <ul>
-        <?php foreach($tarefas as $t){ 
-            if ($t['email_usuario'] === $_SESSION['usuario']['email']) {
-                ?>
+<div class="actions-top">
+    <a href="formTarefa.php" class="btn-primary">➕ Nova tarefa</a>
+    <a href="../actions/logout.php" class="btn-secondary">Sair</a>
+</div>
 
-                <li><strong><?= $t['titulo'] ?></strong></li>
-                <li><?= $t['descricao'] ?></li>
-        <?php
-            }
-        } ?>
+<div class="task-list">
+    <?php foreach ($tarefas as $t): ?>
+        <?php if ($t['email_usuario'] === $_SESSION['usuario']['email']): ?>
+            <div class="task-item">
+                <h3><?= htmlspecialchars($t['titulo']) ?></h3>
+                <p><?= nl2br(htmlspecialchars($t['descricao'])) ?></p>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+
     </ul>
+</div>
 </body>
 </html>
